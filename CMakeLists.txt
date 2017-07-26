@@ -1,7 +1,5 @@
-# project name
+    # project name
   project (com.github.isneezy.passport)
-
-  set (PKG_NAME ${CMAKE_PROJECT_NAME})
 
   # the oldest stable cmake version we support
   cmake_minimum_required (VERSION 2.6)
@@ -17,15 +15,18 @@
   set (PKGDATADIR "${DATADIR}/com.github.isneezy.passport")
 
   set (EXEC_NAME "com.github.isneezy.passport")
-  set (RELEASE_NAME "A hello world.")
+  set (RELEASE_NAME "Just another password keeper")
   set (VERSION "0.1")
-  set (VERSION_INFO "whats up world")
+  set (VERSION_INFO "Secure your passwords in with style!")
 
   # we're about to use pkgconfig to make sure dependencies are installed so let's find pkgconfig first
   find_package(PkgConfig)
 
   # now let's actually check for the required dependencies
-  pkg_check_modules(DEPS REQUIRED gtk+-3.0)
+  pkg_check_modules(DEPS REQUIRED
+    gtk+-3.0
+    granite
+    )
 
   add_definitions(${DEPS_CFLAGS})
   link_libraries(${DEPS_LIBRARIES})
@@ -41,7 +42,9 @@
   # files we want to compile
   include(ValaPrecompile)
   vala_precompile(VALA_C ${EXEC_NAME}
-      src/Passport.vala
+    src/widgets/AppSideBar.vala
+    src/Window.vala
+    src/Application.vala
 
   # tell what libraries to use when compiling
   PACKAGES
