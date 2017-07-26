@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Passport
+GenericName=Passport
+Comment=The place to store your secret passwords and keys
+Categories=Utility;Security;
+Exec=com.github.isneezy.passport
+Icon=dialog-password
+Terminal=false
+Type=Application
+X-GNOME-Gettext-Domain=passport
+Keywords=Key;Chain;KeyRing;Ring;KeyChain;Passport;Security;Hidde;

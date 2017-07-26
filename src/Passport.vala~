@@ -1,0 +1,84 @@
+public class Passport.SideBar : Granite.Widgets.SourceList {
+  construct {
+     var logins = new Granite.Widgets.SourceList.Item ("Logins");
+     logins.badge = "5";
+     logins.icon = new GLib.ThemedIcon ("library-music");
+    
+     var library_passports = new Granite.Widgets.SourceList.ExpandableItem ("Passports");
+     library_passports.expand_all ();
+     library_passports.add (logins);
+
+     root.add(library_passports);
+  }  
+}
+
+
+
+class Passport.App : Granite.Application {
+  Gtk.Window window;
+  Gtk.Paned paned;
+  //Passport.SideBar sidebar;
+  /**
+   * App basic information
+   */
+  construct {
+    application_id = "com.github.isneezy.passport";
+    flags = ApplicationFlags.FLAGS_NONE;
+
+    program_name = "Passport";
+    app_years = "2011-2017";
+
+    build_version = "0.0.1";
+    app_icon = "applications-interfacedesign";
+    main_url = "https://github.com/elementary/granite";
+    bug_url = "https://github.com/elementary/granite/issues";
+    help_url = "https://elementaryos.stackexchange.com/questions/tagged/development";
+    translate_url = "https://l10n.elementary.io/projects/desktop/granite";
+
+    about_documenters = { null };
+    about_artists = { "Ivan Vilanculo <ivan@vilanculo.me>" };
+    about_authors = {
+      "Ivan Vilanculo <ivan@vilanculo.me>",
+    };
+
+    about_comments = "A demo of the Granite toolkit";
+    about_translators = "translator-credits";
+    about_license_type = Gtk.License.GPL_3_0;
+  }
+
+  public override void activate(){
+    window = new Gtk.Window();
+
+    create_headerbar ();
+
+    paned = new Gtk.Paned (Gtk.Orientation.HORIZONTAL);
+    paned.pack1 (new Passport.SideBar(), false, false);
+
+    window.set_default_size (900, 600);
+    window.set_size_request (750, 500);
+    window.title = "Passport";
+    
+    window.show_all ();
+    add_window (window);
+
+    window.add (paned);
+  }
+
+  private void create_headerbar () {
+    var headerbar = new Gtk.HeaderBar ();
+    headerbar.title = "Passport";
+    headerbar.show_close_button = true;
+    
+    var about_button = new Gtk.Button.from_icon_name ("dialog-information", Gtk.IconSize.LARGE_TOOLBAR);
+    about_button.tooltip_text = "About Passport";
+    about_button.clicked.connect (() => {show_about(window);});
+    
+    headerbar.pack_end (about_button);
+    window.set_titlebar (headerbar);
+  }
+
+  public static int main(string[] args){
+    var application = new Passport.App ();
+    return application.run(args);
+  }
+}
